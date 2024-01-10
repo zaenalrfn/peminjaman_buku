@@ -163,9 +163,9 @@ while True:
         tambah_peminjam()
     elif pilihan == "2":
         tampilkan_semua_buku()
-    elif pilihan == "2":
-        tambah_buku()
     elif pilihan == "3":
+        tambah_buku()
+    elif pilihan == "4":
         hapus_buku()
     elif pilihan == "0":
         print("Terima kasih, sampai jumpa!")
