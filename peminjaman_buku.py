@@ -1,3 +1,4 @@
+from tkinter import messagebox
 import mysql.connector
 import wx
 from datetime import datetime
@@ -76,6 +77,58 @@ class AplikasiPeminjamanBuku(wx.Frame):
 
         halaman.SetSizer(sizer)
         self.notebook.AddPage(halaman, "Lihat Buku")
+
+    def buat_halaman_tambah_peminjam(self):
+        halaman = wx.Panel(self.notebook)
+        sizer = wx.BoxSizer(wx.VERTICAL)
+
+        nama_label = wx.StaticText(halaman, label="Nama Peminjam:")
+        self.nama_peminjam_entry = wx.TextCtrl(halaman)
+        tambah_peminjam_button = wx.Button(halaman, label="Tambah Peminjam")
+        tambah_peminjam_button.Bind(wx.EVT_BUTTON, self.tambah_peminjam)
+
+        sizer.Add(nama_label, 0, wx.ALL, 5)
+        sizer.Add(self.nama_peminjam_entry, 0, wx.EXPAND | wx.ALL, 5)
+        sizer.Add(tambah_peminjam_button, 0, wx.ALL, 5)
+
+    def buat_halaman_pinjam_buku(self):
+        halaman = wx.Panel(self.notebook)
+        sizer = wx.BoxSizer(wx.VERTICAL)
+
+        id_buku_label = wx.StaticText(halaman, label="ID Buku:")
+        self.id_buku_entry = wx.TextCtrl(halaman)
+        peminjam_id_label = wx.StaticText(halaman, label="ID Peminjam:")
+        self.peminjam_id_entry = wx.TextCtrl(halaman)
+        pinjam_buku_button = wx.Button(halaman, label="Masukkan Buku yang Dipinjam")
+        pinjam_buku_button.Bind(wx.EVT_BUTTON, self.buku_dipinjam)
+
+        sizer.Add(id_buku_label, 0, wx.ALL, 5)
+        sizer.Add(self.id_buku_entry, 0, wx.EXPAND | wx.ALL, 5)
+        sizer.Add(peminjam_id_label, 0, wx.ALL, 5)
+        sizer.Add(self.peminjam_id_entry, 0, wx.EXPAND | wx.ALL, 5)
+        sizer.Add(pinjam_buku_button, 0, wx.ALL, 5)
+
+        halaman.SetSizer(sizer)
+        self.notebook.AddPage(halaman, "Masukkan Buku yang Dipinjam")
+
+    def buat_halaman_cari_data_peminjam(self):
+        halaman = wx.Panel(self.notebook)
+        sizer = wx.BoxSizer(wx.VERTICAL)
+
+        id_peminjam_label = wx.StaticText(halaman, label="ID Peminjam:")
+        self.id_peminjam_entry_cari = wx.TextCtrl(halaman)
+        cari_data_peminjam_button = wx.Button(halaman, label="Cari Data Peminjam")
+        cari_data_peminjam_button.Bind(wx.EVT_BUTTON, self.cari_data_peminjam)
+
+        sizer.Add(id_peminjam_label, 0, wx.ALL, 5)
+        sizer.Add(self.id_peminjam_entry_cari, 0, wx.EXPAND | wx.ALL, 5)
+        sizer.Add(cari_data_peminjam_button, 0, wx.ALL, 5)
+
+        halaman.SetSizer(sizer)
+        self.notebook.AddPage(halaman, "Cari Data Peminjam")
+
+        halaman.SetSizer(sizer)
+        self.notebook.AddPage(halaman, "Tambah Peminjam")
 
     def tambah_buku(self, event):
         judul = self.judul_entry.GetValue()
@@ -288,7 +341,7 @@ def cari_data_peminjam_database(self, id_peminjam):
                         f"{data_peminjam_buku[7]}",
                     ]
                 )
-            messagebox.showinfo("Info", table)
+        messagebox.showinfo("Info", table)
 
         self.tutupKoneksi(konek, cursor)
 
