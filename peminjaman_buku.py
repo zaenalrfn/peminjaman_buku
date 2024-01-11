@@ -311,7 +311,7 @@ def pengembalian_buku():
     if not peminjaman:
         print("Peminjaman tidak ditemukan. Masukkan ID peminjaman yang valid.")
     else:
-        # Lakukan pengembalian buku
+        # di sni code meLakukan pengembalian buku
         sql_pengembalian = "DELETE FROM peminjam_buku WHERE Id_Pinjam_Buku = %s"
         val_pengembalian = (id_peminjaman,)
         cursor.execute(sql_pengembalian, val_pengembalian)
