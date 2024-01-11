@@ -12,7 +12,7 @@ import os
 class AplikasiManajemenPerpustakaan:
     def __init__(self, root):
         self.root = root
-        self.root.title("ALGORITMA TEORY")
+        self.root.title("aplikasi.sistem peminjaman buku")
 
         # Inisialisasi koneksi database
         self.db = mysql.connector.connect(
@@ -26,6 +26,8 @@ class AplikasiManajemenPerpustakaan:
         # Menu Bar
         menu_bar = tk.Menu(root)
         root.config(menu=menu_bar)
+
+        self.hasil_lihat_buku = []  # Variabel untuk menyimpan hasil query lihat buku
 
         # Menu File
         menu_file = tk.Menu(menu_bar, tearoff=0)
@@ -111,13 +113,12 @@ class AplikasiManajemenPerpustakaan:
 
     def lihat_semua_buku(self):
         self.cursor.execute("SELECT * FROM pinjam_buku")
-        hasil = self.cursor.fetchall()
+        self.hasil_lihat_buku = self.cursor.fetchall()
 
-        # Membuat string untuk menampilkan data buku dengan pembatas kolom
-        data_buku_str = "ID\t|\tJudul\t|\tTahun Terbit\t|\tPenulis\n"
-        data_buku_str += "-"*50 + "\n"
-        for data_buku in hasil:
-            data_buku_str += f"{data_buku[0]}\t|\t{data_buku[1]}\t|\t{data_buku[2]}\t|\t{data_buku[3]}\n"
+        # Membuat string untuk menampilkan data buku dengan format yang diinginkan
+        data_buku_str = ""
+        for data_buku in self.hasil_lihat_buku:
+            data_buku_str += f"ID: {data_buku[0]}\nJudul: {data_buku[1]}\nTahun Terbit: {data_buku[2]}\nPenulis: {data_buku[3]}\n\n"
 
         # Menampilkan data buku dalam pop-up
         self.tampilkan_pop_up("Semua Buku", data_buku_str)
@@ -132,7 +133,7 @@ class AplikasiManajemenPerpustakaan:
 
     def pinjam_buku(self):
         id_buku = int(input("Masukkan ID Buku yang dipinjam: "))
-        id_peminjam = int(input("Masukkan ID Peminjam: "))
+        id_peminjam = int(input("Masukkan ID Peminjam: "))  
 
         waktu_sekarang = datetime.now()
         waktu_peminjaman = waktu_sekarang.date()
