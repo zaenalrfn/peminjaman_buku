@@ -1,3 +1,4 @@
+#updated 2026
 import mysql.connector
 from datetime import datetime
 from prettytable import PrettyTable
